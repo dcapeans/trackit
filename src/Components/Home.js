@@ -1,16 +1,39 @@
+import { Link } from "react-router-dom"
+import { useState } from "react"
 import Logo from "./Logo";
 import SignUpLink from "./SignUpLink";
-import Button from "./Button"
 import styled from "styled-components"
+import axios from "axios";
+import Loader from "react-loader-spinner"
 
 export default function Home(){
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
+
+    const Login = () => {
+        const body = {
+            email,
+            password
+        }
+        const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body)
+        setIsLoading(true)
+        request.then((response)=>console.log(response)) 
+        request.catch((err)=> {
+            alert("Ocorreu um erro ao entrar. Tente novamente")
+            setIsLoading(false)
+        })
+    }
+
     return (
         <Container>
             <Logo />
-            <input type="text" placeholder="email"/>
-            <input type="password" placeholder="senha"/>
-            <Button text="Entrar" />
-            <SignUpLink text="Não tem uma conta? Cadastre-se!" />
+            <input disabled={isLoading} type="text" placeholder="email" onChange={(e)=> setEmail(e.target.value)} />
+            <input disabled={isLoading} type="password" placeholder="senha" onChange={(e)=> setPassword(e.target.value)} />
+            <Button onClick={Login} disabled={isLoading}>{isLoading ? <Loader type="ThreeDots" color="#FFF" height={45}/> : "Entrar"}</Button>
+            <Link to="/cadastro">
+                <SignUpLink text="Não tem uma conta? Cadastre-se!"/>
+            </Link>
         </Container>
     )
 }
@@ -18,18 +41,35 @@ export default function Home(){
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    margin-top: 90px;
+    background-color: #fff;
+    height: 100vh;
+
     input {
-        width: 90%;
+        width: 85%;
         height: 45px;
         font-size: 19px;
         border: 1px solid #d5d5d5;
         border-radius:5px;
         margin: 3px 0;
+        font-family: inherit
     }
     input::placeholder {
         color: #dbdbdb;
     }
+`
+
+const Button = styled.button`
+    width: 85%;
+    height: 45px;
+    background: #52b6ff;
+    opacity: ${props => props.disabled ? "0.7" : "1"};
+    border-style: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 21px;
+    margin-top: 3px;
+    margin-bottom: 30px;
+    font-family: inherit;
+    outline: none;
 `

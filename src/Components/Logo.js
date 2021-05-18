@@ -7,6 +7,7 @@ export default function Logo(){
 }
 
 const Img = styled.img`
-    width: 160px;
+    width: 180px;
     margin-bottom: 30px;
+    margin-top: 70px;
 `
