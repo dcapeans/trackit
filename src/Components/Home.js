@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom"
-import { useState } from "react"
+import { Link, useHistory } from "react-router-dom"
+import { useState, useContext } from "react"
+import UserContext from "../Context/UserContext"
 import Logo from "./Logo";
 import SignUpLink from "./SignUpLink";
 import styled from "styled-components"
@@ -10,6 +11,8 @@ export default function Home(){
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [isLoading, setIsLoading] = useState(false)
+    const { setUser } = useContext(UserContext)
+    let history = useHistory()
 
     const Login = () => {
         const body = {
@@ -18,7 +21,11 @@ export default function Home(){
         }
         const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body)
         setIsLoading(true)
-        request.then((response)=>console.log(response)) 
+        request.then((res)=> {
+            setUser(res.data)
+            history.push("/habitos")
+            setIsLoading(false)
+        }) 
         request.catch((err)=> {
             alert("Ocorreu um erro ao entrar. Tente novamente")
             setIsLoading(false)

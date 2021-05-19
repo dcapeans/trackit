@@ -1,14 +1,12 @@
 import styled from "styled-components"
 import Footer from "./Footer"
+import Header from "./Header"
 import CreateHabit from "./CreateHabit"
 
 export default function Habits() {
     return (
         <Container>
-            <Header>
-                <img src="/assets/trackit.png" alt="TrackIt" />
-                <img className="profileImg" src="/assets/profile.png" alt="Profile" />
-            </Header>
+            <Header />
             <Title>
                 <span>Meus hábitos</span>
                 <button>+</button>
@@ -32,26 +30,6 @@ const Container = styled.div`
         font-size: 18px;
         color: #666;
         line-height: 22px;
-    }
-`
-
-const Header = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color:  #126BA5;
-    width: 100%;
-    height: 70px;
-    padding: 0 15px;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
-
-    .profileImg {
-        width: 51px;
-        height: 51px;
-        border-radius: 100px;
     }
 `
 

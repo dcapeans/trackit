@@ -1,17 +1,37 @@
-import { Link} from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
+import { useState } from "react"
+import axios from "axios"
 import Logo from "./Logo";
 import SignUpLink from "./SignUpLink";
 import styled from "styled-components"
 
 export default function SignUp(){
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [name, setName] = useState("")
+    const [image, setImage] = useState("")
+    let history = useHistory()
+
+    const SignUp = () => {
+        const body = {
+            email, 
+            name,
+            image,
+            password
+        }
+        const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", body)
+        request.then(() => history.push("/"))
+        request.catch((err)=> console.log(err))
+    }
+
     return (
         <Container>
             <Logo />
-            <input type="text" placeholder="email"/>
-            <input type="password" placeholder="senha"/>
-            <input type="text" placeholder="nome"/>
-            <input type="url" placeholder="foto"/>
-            <button>Cadastrar</button>
+            <input type="text" placeholder="email" onChange={(e)=> setEmail(e.target.value)}/>
+            <input type="password" placeholder="senha" onChange={(e)=> setPassword(e.target.value)}/>
+            <input type="text" placeholder="nome" onChange={(e)=> setName(e.target.value)}/>
+            <input type="url" placeholder="foto" onChange={(e)=> setImage(e.target.value)}/>
+            <button onClick={SignUp}>Cadastrar</button>
             <Link to="/">
                 <SignUpLink text="Já tem uma conta? Faça login!" />
             </Link>
