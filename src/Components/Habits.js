@@ -1,11 +1,27 @@
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import UserContext from "../Context/UserContext"
+import axios from "axios"
 import styled from "styled-components"
 import Footer from "./Footer"
 import Header from "./Header"
 import CreateHabit from "./CreateHabit"
+import Habit from "./Habit"
 
 export default function Habits() {
     const [showCreateHabit, setShowCreateHabit] = useState(false)
+    const [habits, setHabits] = useState([])
+    const { user } = useContext(UserContext)
+
+    useEffect(()=>{
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+            }
+        }
+        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config)
+        request.then((res)=> setHabits(res.data))
+        request.catch((err)=>console.log(err))
+    }, [user.token])
 
     const showCreateBox = () => {
         setShowCreateHabit(true)
@@ -19,6 +35,7 @@ export default function Habits() {
                 <button onClick={showCreateBox}>+</button>
             </Title>
             <CreateHabit showCreateHabit={showCreateHabit} setShowCreateHabit={setShowCreateHabit}/>
+            <Habit />
             <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
             <Footer />
         </Container>

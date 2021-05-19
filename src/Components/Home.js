@@ -14,7 +14,8 @@ export default function Home(){
     const { setUser } = useContext(UserContext)
     let history = useHistory()
 
-    const login = () => {
+    const login = (e) => {
+        e.preventDefault()
         const body = {
             email,
             password
@@ -35,9 +36,11 @@ export default function Home(){
     return (
         <Container>
             <Logo />
-            <input disabled={isLoading} type="text" placeholder="email" onChange={(e)=> setEmail(e.target.value)} />
-            <input disabled={isLoading} type="password" placeholder="senha" onChange={(e)=> setPassword(e.target.value)} />
-            <Button onClick={login} disabled={isLoading}>{isLoading ? <Loader type="ThreeDots" color="#FFF" height={45}/> : "Entrar"}</Button>
+            <form onSubmit={login}>
+                <input disabled={isLoading} type="text" placeholder="email" onChange={(e)=> setEmail(e.target.value)} required/>
+                <input disabled={isLoading} type="password" placeholder="senha" onChange={(e)=> setPassword(e.target.value)} required/>
+                <Button disabled={isLoading} type="submit">{isLoading ? <Loader type="ThreeDots" color="#FFF" height={45}/> : "Entrar"}</Button>
+            </form>
             <Link to="/cadastro">
                 <SignUpLink text="Não tem uma conta? Cadastre-se!"/>
             </Link>
@@ -51,6 +54,12 @@ const Container = styled.div`
     align-items: center;
     background-color: #fff;
     height: 100vh;
+    form{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
     input {
         width: 85%;
         height: 45px;

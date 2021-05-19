@@ -13,7 +13,8 @@ export default function SignUp(){
     const [isLoading, setIsLoading] = useState(false)
     let history = useHistory()
 
-    const signUp = () => {
+    const signUp = (e) => {
+        e.preventDEfault()
         const body = {
             email, 
             name,
@@ -34,11 +35,13 @@ export default function SignUp(){
     return (
         <Container>
             <Logo />
-            <input disabled={isLoading} type="text" placeholder="email" onChange={(e)=> setEmail(e.target.value)}/>
-            <input disabled={isLoading} type="password" placeholder="senha" onChange={(e)=> setPassword(e.target.value)}/>
-            <input disabled={isLoading} type="text" placeholder="nome" onChange={(e)=> setName(e.target.value)}/>
-            <input disabled={isLoading} type="url" placeholder="foto" onChange={(e)=> setImage(e.target.value)}/>
-            <Button disabled={isLoading} onClick={signUp}>Cadastrar</Button>
+            <form onSubmit={signUp}>
+                <input disabled={isLoading} type="text" placeholder="email" onChange={(e)=> setEmail(e.target.value)} required/>
+                <input disabled={isLoading} type="password" placeholder="senha" onChange={(e)=> setPassword(e.target.value)} required/>
+                <input disabled={isLoading} type="text" placeholder="nome" onChange={(e)=> setName(e.target.value)} required/>
+                <input disabled={isLoading} type="url" placeholder="foto" onChange={(e)=> setImage(e.target.value)} required/>
+                <Button disabled={isLoading} type="submit">Cadastrar</Button>
+            </form>
             <Link to="/">
                 <SignUpLink text="Já tem uma conta? Faça login!" />
             </Link>
@@ -52,6 +55,12 @@ const Container = styled.div`
     align-items: center;
     background-color: #fff;
     height: 100vh;
+    form{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
     input {
         width: 85%;
         height: 45px;
