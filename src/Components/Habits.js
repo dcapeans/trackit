@@ -1,17 +1,24 @@
+import { useState } from "react"
 import styled from "styled-components"
 import Footer from "./Footer"
 import Header from "./Header"
 import CreateHabit from "./CreateHabit"
 
 export default function Habits() {
+    const [showCreateHabit, setShowCreateHabit] = useState(false)
+
+    const showCreateBox = () => {
+        setShowCreateHabit(true)
+    }
+
     return (
         <Container>
             <Header />
             <Title>
                 <span>Meus hábitos</span>
-                <button>+</button>
+                <button onClick={showCreateBox}>+</button>
             </Title>
-            <CreateHabit />
+            <CreateHabit showCreateHabit={showCreateHabit} setShowCreateHabit={setShowCreateHabit}/>
             <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
             <Footer />
         </Container>

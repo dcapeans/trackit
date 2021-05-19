@@ -10,9 +10,10 @@ export default function SignUp(){
     const [password, setPassword] = useState("")
     const [name, setName] = useState("")
     const [image, setImage] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
     let history = useHistory()
 
-    const SignUp = () => {
+    const signUp = () => {
         const body = {
             email, 
             name,
@@ -20,18 +21,24 @@ export default function SignUp(){
             password
         }
         const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", body)
-        request.then(() => history.push("/"))
-        request.catch((err)=> console.log(err))
+        request.then(() => {
+            setIsLoading(true)
+            history.push("/")
+        })
+        request.catch((err)=> {
+            alert("Ocorreu um erro ao entrar. Tente novamente")
+            setIsLoading(false)
+        })
     }
 
     return (
         <Container>
             <Logo />
-            <input type="text" placeholder="email" onChange={(e)=> setEmail(e.target.value)}/>
-            <input type="password" placeholder="senha" onChange={(e)=> setPassword(e.target.value)}/>
-            <input type="text" placeholder="nome" onChange={(e)=> setName(e.target.value)}/>
-            <input type="url" placeholder="foto" onChange={(e)=> setImage(e.target.value)}/>
-            <button onClick={SignUp}>Cadastrar</button>
+            <input disabled={isLoading} type="text" placeholder="email" onChange={(e)=> setEmail(e.target.value)}/>
+            <input disabled={isLoading} type="password" placeholder="senha" onChange={(e)=> setPassword(e.target.value)}/>
+            <input disabled={isLoading} type="text" placeholder="nome" onChange={(e)=> setName(e.target.value)}/>
+            <input disabled={isLoading} type="url" placeholder="foto" onChange={(e)=> setImage(e.target.value)}/>
+            <Button disabled={isLoading} onClick={signUp}>Cadastrar</Button>
             <Link to="/">
                 <SignUpLink text="Já tem uma conta? Faça login!" />
             </Link>
@@ -57,17 +64,19 @@ const Container = styled.div`
     input::placeholder {
         color: #dbdbdb;
     }
-    button {
-        width: 85%;
-        height: 45px;
-        background: #52b6ff;
-        border-style: none;
-        border-radius: 5px;
-        color: #fff;
-        font-size: 21px;
-        margin-top: 3px;
-        margin-bottom: 30px;
-        font-family: inherit;
-        outline: none;
-    }
+`
+
+const Button = styled.button` 
+    width: 85%;
+    height: 45px;
+    background: #52b6ff;
+    opacity: ${props => props.disabled ? "0.7" : "1"};
+    border-style: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 21px;
+    margin-top: 3px;
+    margin-bottom: 30px;
+    font-family: inherit;
+    outline: none;
 `

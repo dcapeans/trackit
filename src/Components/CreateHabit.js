@@ -1,8 +1,13 @@
 import styled from "styled-components"
 
-export default function CreateHabit(){
+export default function CreateHabit({showCreateHabit, setShowCreateHabit}){
+
+    const hideCreateBox = () => {
+        setShowCreateHabit(false)
+    }
+
     return (
-        <StyledCreateHabit>
+        <StyledCreateHabit isEnabled={showCreateHabit}>
             <input type="text" placeholder="nome do hábito"/>
             <Weekdays>
                 <button>D</button>
@@ -14,7 +19,7 @@ export default function CreateHabit(){
                 <button>S</button>
             </Weekdays>
             <div className="buttons__container">
-                <button className="cancel__btn">Cancelar</button>
+                <button className="cancel__btn" onClick={hideCreateBox}>Cancelar</button>
                 <button className="save__btn">Salvar</button>
             </div>
         </StyledCreateHabit>
@@ -23,7 +28,7 @@ export default function CreateHabit(){
 
 const StyledCreateHabit = styled.div`
     background-color: #fff;
-    display: flex;
+    display: ${props => props.isEnabled ? "flex" : "none"};
     flex-direction: column;
     justify-content: center;
     width: 92%;

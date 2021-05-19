@@ -4,7 +4,6 @@ import UserContext from "../Context/UserContext"
 
 export default function Header(){
     const { user } = useContext(UserContext)
-    console.log(user)
 
     return (
         <StyledHeader>

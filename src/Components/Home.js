@@ -14,7 +14,7 @@ export default function Home(){
     const { setUser } = useContext(UserContext)
     let history = useHistory()
 
-    const Login = () => {
+    const login = () => {
         const body = {
             email,
             password
@@ -23,7 +23,7 @@ export default function Home(){
         setIsLoading(true)
         request.then((res)=> {
             setUser(res.data)
-            history.push("/habitos")
+            history.push("/hoje")
             setIsLoading(false)
         }) 
         request.catch((err)=> {
@@ -37,7 +37,7 @@ export default function Home(){
             <Logo />
             <input disabled={isLoading} type="text" placeholder="email" onChange={(e)=> setEmail(e.target.value)} />
             <input disabled={isLoading} type="password" placeholder="senha" onChange={(e)=> setPassword(e.target.value)} />
-            <Button onClick={Login} disabled={isLoading}>{isLoading ? <Loader type="ThreeDots" color="#FFF" height={45}/> : "Entrar"}</Button>
+            <Button onClick={login} disabled={isLoading}>{isLoading ? <Loader type="ThreeDots" color="#FFF" height={45}/> : "Entrar"}</Button>
             <Link to="/cadastro">
                 <SignUpLink text="Não tem uma conta? Cadastre-se!"/>
             </Link>
@@ -51,7 +51,6 @@ const Container = styled.div`
     align-items: center;
     background-color: #fff;
     height: 100vh;
-
     input {
         width: 85%;
         height: 45px;
