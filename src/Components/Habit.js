@@ -1,12 +1,28 @@
 import styled from "styled-components"
 import { IoTrashOutline } from "react-icons/io5"
+import axios from "axios"
+import UserContext from "../Context/UserContext"
+import { useContext } from "react"
 
-export default function Habit({ habit, habits, setHabits }){
+export default function Habit({ habit, habits, setHabits, fetchHabits }){
+    const { user } = useContext(UserContext)
 
     const deleteHabit = () =>{
-        setHabits(habits.filter(item => item.id !== habit.id))
+        if(window.confirm(`Tem certeza que quer apagar o hábito ${habit.name}?`)){
+
+        }
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+            }
+        }
+        const request = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habit.id}`, config )
+        request.then((res) => {
+            fetchHabits()
+        })
+        request.catch((err) => console.log(err))
     }
-    
+
     return(
         <Container>
             <span>{habit.name}</span>

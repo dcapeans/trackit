@@ -4,7 +4,7 @@ import { useState, useContext } from "react"
 import axios from "axios"
 import Loader from "react-loader-spinner"
 
-export default function CreateHabit({showCreateHabit, setShowCreateHabit}){
+export default function CreateHabit({showCreateHabit, setShowCreateHabit, fetchHabits}){
     const [habitName, setHabitName] = useState("")
     const [days, setDays] = useState([])
     const [isLoading, setIsLoading] = useState(false)
@@ -30,6 +30,7 @@ export default function CreateHabit({showCreateHabit, setShowCreateHabit}){
         setIsLoading(true)
         request.then((res) => {
             setIsLoading(false)
+            fetchHabits()
             setShowCreateHabit(false)
             setHabitName("")
             setDays([])
@@ -51,7 +52,7 @@ export default function CreateHabit({showCreateHabit, setShowCreateHabit}){
 
     return (
         <StyledCreateHabit isEnabled={showCreateHabit}>
-            <input type="text" placeholder="nome do hábito" onChange={(e) => setHabitName(e.target.value)} required disabled={isLoading}/>
+            <input type="text" value={habitName} placeholder="nome do hábito" onChange={(e) => setHabitName(e.target.value)} required disabled={isLoading}/>
             <Weekdays>
                 <button id="7" onClick={saveDay} className={days.includes("7") ? "selected" : ""} disabled={isLoading}>D</button>
                 <button id="1" onClick={saveDay} className={days.includes("1") ? "selected" : ""} disabled={isLoading}>S</button>

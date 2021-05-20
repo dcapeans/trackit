@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState, useCallback } from "react"
 import UserContext from "../Context/UserContext"
 import axios from "axios"
 import styled from "styled-components"
@@ -9,10 +9,10 @@ import Habit from "./Habit"
 
 export default function Habits() {
     const [showCreateHabit, setShowCreateHabit] = useState(false)
-    const [habits, setHabits] = useState(null)
+    const [habits, setHabits] = useState([])
     const { user } = useContext(UserContext)
 
-    useEffect(()=>{
+    const fetchHabits = useCallback(() => {
         const config = {
             headers: {
                 Authorization: `Bearer ${user.token}`
@@ -20,11 +20,14 @@ export default function Habits() {
         }
         const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config)
         request.then((res)=> {
-            console.log(res.data)
             setHabits(res.data)
         })
         request.catch((err)=>console.log(err))
     }, [user.token])
+
+    useEffect(()=>{
+        fetchHabits()
+    }, [fetchHabits])
 
     const showCreateBox = () => {
         setShowCreateHabit(true)
@@ -37,10 +40,10 @@ export default function Habits() {
                 <span>Meus hábitos</span>
                 <button onClick={showCreateBox}>+</button>
             </Title>
-            <CreateHabit showCreateHabit={showCreateHabit} setShowCreateHabit={setShowCreateHabit}/>
-            {habits ? 
+            <CreateHabit showCreateHabit={showCreateHabit} setShowCreateHabit={setShowCreateHabit} fetchHabits={fetchHabits}/>
+            {habits.length > 0 ? 
                 habits.map((habit, i) => (
-                    <Habit key={i} habit={habit} habits={habits} setHabits={setHabits}/>
+                    <Habit key={i} habit={habit} habits={habits} setHabits={setHabits} fetchHabits={fetchHabits}/>
                 )) :
                 <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
             }

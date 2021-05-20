@@ -4,7 +4,7 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
 export default function Footer(){
-    const value = 66
+    const value = 10
 
     return (
         <StyledFooter>

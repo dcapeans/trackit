@@ -11,8 +11,14 @@ export default function Home(){
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [isLoading, setIsLoading] = useState(false)
-    const { setUser } = useContext(UserContext)
+    const { user, setUser } = useContext(UserContext)
     let history = useHistory()
+    console.log(localStorage.getItem(user))
+
+    if(localStorage.getItem("user")){
+        setUser(JSON.parse(localStorage.getItem("user")))
+        history.push("/hoje")
+    }
 
     const login = (e) => {
         e.preventDefault()
@@ -23,7 +29,9 @@ export default function Home(){
         const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body)
         setIsLoading(true)
         request.then((res)=> {
+            console.log(res.data)
             setUser(res.data)
+            localStorage.setItem( "user", JSON.stringify(res.data))
             history.push("/hoje")
             setIsLoading(false)
         }) 
