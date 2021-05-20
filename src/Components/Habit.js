@@ -1,10 +1,11 @@
 import styled from "styled-components"
 import { IoTrashOutline } from "react-icons/io5"
 
-export default function Habit(){
+export default function Habit({ habit }){
+    const { id, name, days } = habit
     return(
         <Container>
-            <span>Nome do hábito</span>
+            <span>{name}</span>
             <Weekdays>
                 <button>D</button>
                 <button>S</button>
@@ -29,7 +30,7 @@ const Container = styled.div`
     justify-content: center;
     width: 92%;
     padding: 15px;
-    margin: 0  auto;
+    margin: 5px auto;
     border-radius: 5px;
     color: #666;
     font-size: 20px;

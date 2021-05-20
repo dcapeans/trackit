@@ -35,8 +35,12 @@ export default function Habits() {
                 <button onClick={showCreateBox}>+</button>
             </Title>
             <CreateHabit showCreateHabit={showCreateHabit} setShowCreateHabit={setShowCreateHabit}/>
-            <Habit />
-            <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+            {habits.length > 0 ? 
+                habits.map((habit) => (
+                    <Habit habit={habit}/>
+                )) :
+                <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+            }
             <Footer />
         </Container>
     )
@@ -47,6 +51,7 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     margin-top: 70px;
+    margin-bottom: 100px;
 
     p {
         width: 90%;
@@ -62,7 +67,7 @@ const Title = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 0 15px;
-    margin: 25px 0;
+    margin: 25px 0 10px 0;
     color: #126BA5;
     font-size: 23px;
 

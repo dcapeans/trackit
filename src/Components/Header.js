@@ -25,6 +25,7 @@ const StyledHeader = styled.div`
     height: 70px;
     padding: 0 15px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
+    z-index: 1;
 
     .profileImg {
         width: 51px;
