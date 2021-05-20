@@ -1,26 +1,49 @@
+import axios from "axios"
 import dayjs from "dayjs"
 import updateLocale from "dayjs/plugin/updateLocale"
+import { useCallback, useContext, useEffect, useState } from "react"
+import UserContext from "../Context/UserContext"
 import styled from "styled-components"
 import Footer from "./Footer"
 import Header from "./Header"
 import TodayHabit from "./TodayHabit"
 
 export default function Today(){
+    const [todayHabits, setTodayHabits] = useState([])
+    const { user } = useContext(UserContext)
+    console.log(todayHabits)
     dayjs().format()
     dayjs.extend(updateLocale)
     dayjs.updateLocale('en', {
         weekdays: [
           "Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"
         ]
-      })
-      
+    })
+
+    const fetchTodayHabits = useCallback(() => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+            }
+        }
+        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config)
+        request.then((res) => setTodayHabits(res.data))
+        request.catch((err) => console.log(err))
+    }, [user.token])
+
+    useEffect(() => {
+        fetchTodayHabits()
+    }, [fetchTodayHabits])
+
     return (
         <>
         <Header />
         <Container>
             <Day>{dayjs().format("dddd, DD/MM")}</Day>
             <Progress>67% dos hábitos concluídos</Progress>
-            <TodayHabit />
+            {todayHabits.map((todayHabit) => (
+                <TodayHabit key={todayHabit.id} todayHabit={todayHabit} fetchTodayHabits={fetchTodayHabits}/>
+            ))}
         </Container>
         <Footer />
         </>

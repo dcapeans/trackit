@@ -1,15 +1,44 @@
 import styled from "styled-components"
+import UserContext from "../Context/UserContext"
 import { IoCheckmark } from "react-icons/io5"
+import { useContext } from "react"
+import axios from "axios"
 
-export default function TodayHabit(){
+export default function TodayHabit({ todayHabit, fetchTodayHabits }){
+    const { user } = useContext(UserContext)
+
+    const checkHabitDone = () => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+            }
+        }
+        if(todayHabit.done){
+            const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${todayHabit.id}/uncheck`, [], config)
+            request.then((res) => {
+                console.log(res)
+                fetchTodayHabits()
+            })
+            request.catch((err) => console.log(err))
+            
+            return
+        }
+        const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${todayHabit.id}/check`, [], config)
+        request.then((res) => {
+            console.log(res)
+            fetchTodayHabits()
+        })
+        request.catch((err) => console.log(err.response.data))
+    }
+
     return (
         <Container>
             <div>
-                <p>nome</p>
-                <span>Sequência atual: 4 dias</span>
-                <span>Seu recorde: 5 dias</span>
+                <p>{todayHabit.name}</p>
+                <span>Sequência atual: {todayHabit.currentSequence} dias</span>
+                <span>Seu recorde: {todayHabit.highestSequence} dias</span>
             </div>
-            <div className="checkmark">
+            <div className={todayHabit.done ? "checkmark checked" : "checkmark"} onClick={checkHabitDone}>
                 <IoCheckmark/>
             </div>
 
@@ -47,11 +76,15 @@ const Container = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #8fc549;
+        background-color: #ebebeb;
+        border: 1px solid #E7E7E7;
         border-radius: 5px;
         width: 64px;
         height: 64px;
         font-size: 50px;
         color: #fff;
+    }
+    .checked {
+        background-color: #8fc549;
     }
 `
