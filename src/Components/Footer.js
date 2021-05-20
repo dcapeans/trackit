@@ -3,8 +3,7 @@ import styled from "styled-components"
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-export default function Footer(){
-    const value = 10
+export default function Footer({todayHabits}){
 
     return (
         <StyledFooter>
@@ -12,7 +11,7 @@ export default function Footer(){
                 <button>Hábitos</button>
             </Link>
             <Link to="/hoje" className="progressbar">
-                <CircularProgressbar value={value} text="Hoje" background backgroundPadding={6} styles={buildStyles({
+                <CircularProgressbar value={((todayHabits.filter((item)=> item.done).length / todayHabits.length)*100).toFixed()} text="Hoje" background backgroundPadding={6} styles={buildStyles({
           backgroundColor: "#3e98c7",
           textColor: "#fff",
           pathColor: "#fff",

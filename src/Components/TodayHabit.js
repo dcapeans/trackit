@@ -16,16 +16,14 @@ export default function TodayHabit({ todayHabit, fetchTodayHabits }){
         if(todayHabit.done){
             const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${todayHabit.id}/uncheck`, [], config)
             request.then((res) => {
-                console.log(res)
                 fetchTodayHabits()
             })
-            request.catch((err) => console.log(err))
+            request.catch((err) => console.log(err.response.data))
             
             return
         }
         const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${todayHabit.id}/check`, [], config)
         request.then((res) => {
-            console.log(res)
             fetchTodayHabits()
         })
         request.catch((err) => console.log(err.response.data))
@@ -35,8 +33,16 @@ export default function TodayHabit({ todayHabit, fetchTodayHabits }){
         <Container>
             <div>
                 <p>{todayHabit.name}</p>
-                <span>Sequência atual: {todayHabit.currentSequence} dias</span>
-                <span>Seu recorde: {todayHabit.highestSequence} dias</span>
+                <span>Sequência atual: 
+                    <span className={todayHabit.done ? "highlight" : ""}>
+                        {todayHabit.currentSequence} dias
+                    </span>
+                </span>
+                <span>Seu recorde: 
+                    <span className={todayHabit.currentSequence === todayHabit.highestSequence && todayHabit.highestSequence > 0? "highlight": ""}>
+                        {todayHabit.highestSequence} dias
+                    </span>
+                </span>
             </div>
             <div className={todayHabit.done ? "checkmark checked" : "checkmark"} onClick={checkHabitDone}>
                 <IoCheckmark/>
@@ -86,5 +92,9 @@ const Container = styled.div`
     }
     .checked {
         background-color: #8fc549;
+    }
+
+    .highlight {
+        color:  #8fc549;
     }
 `

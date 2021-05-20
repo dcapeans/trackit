@@ -11,7 +11,7 @@ import TodayHabit from "./TodayHabit"
 export default function Today(){
     const [todayHabits, setTodayHabits] = useState([])
     const { user } = useContext(UserContext)
-    console.log(todayHabits)
+
     dayjs().format()
     dayjs.extend(updateLocale)
     dayjs.updateLocale('en', {
@@ -40,12 +40,14 @@ export default function Today(){
         <Header />
         <Container>
             <Day>{dayjs().format("dddd, DD/MM")}</Day>
-            <Progress>67% dos hábitos concluídos</Progress>
+            <Progress>{todayHabits.filter((item)=> item.done).length ? `${((todayHabits.filter((item)=> item.done).length / todayHabits.length)*100).toFixed()}% dos hábitos concluídos` : "Nenhum hábito concluído ainda"}
+                
+            </Progress>
             {todayHabits.map((todayHabit) => (
                 <TodayHabit key={todayHabit.id} todayHabit={todayHabit} fetchTodayHabits={fetchTodayHabits}/>
             ))}
         </Container>
-        <Footer />
+        <Footer todayHabits={todayHabits}/>
         </>
     )
 }
