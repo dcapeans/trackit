@@ -1,21 +1,25 @@
 import styled from "styled-components"
 import { IoTrashOutline } from "react-icons/io5"
 
-export default function Habit({ habit }){
-    const { id, name, days } = habit
+export default function Habit({ habit, habits, setHabits }){
+
+    const deleteHabit = () =>{
+        setHabits(habits.filter(item => item.id !== habit.id))
+    }
+    
     return(
         <Container>
-            <span>{name}</span>
+            <span>{habit.name}</span>
             <Weekdays>
-                <button>D</button>
-                <button>S</button>
-                <button>T</button>
-                <button>Q</button>
-                <button>Q</button>
-                <button>S</button>
-                <button>S</button>
+                <button id="7" className={habit.days.includes(7) ? "selected" : ""}>D</button>
+                <button id="1" className={habit.days.includes(1) ? "selected" : ""}>S</button>
+                <button id="2" className={habit.days.includes(2) ? "selected" : ""}>T</button>
+                <button id="3" className={habit.days.includes(3) ? "selected" : ""}>Q</button>
+                <button id="4" className={habit.days.includes(4) ? "selected" : ""}>Q</button>
+                <button id="5" className={habit.days.includes(5) ? "selected" : ""}>S</button>
+                <button id="6" className={habit.days.includes(6) ? "selected" : ""}>S</button>
             </Weekdays>
-            <div className="trash__icon">
+            <div className="trash__icon" onClick={deleteHabit}>
                 <IoTrashOutline />
             </div>
         </Container>
@@ -56,5 +60,10 @@ const Weekdays = styled.div`
         font-size: 20px;
         font-family: inherit;
         margin-right: 4px;
+    }
+
+    .selected {
+        background-color: #666;
+        color: #fff
     }
 `

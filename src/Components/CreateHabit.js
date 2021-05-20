@@ -31,8 +31,13 @@ export default function CreateHabit({showCreateHabit, setShowCreateHabit}){
         request.then((res) => {
             setIsLoading(false)
             setShowCreateHabit(false)
+            setHabitName("")
+            setDays([])
         })
-        request.catch((err) => console.log(err))
+        request.catch((err) => {
+            setIsLoading(false)
+            alert("Ocorreu um erro ao salvar o hábito")
+        })
     }
 
     const saveDay = (e) => {
@@ -48,7 +53,7 @@ export default function CreateHabit({showCreateHabit, setShowCreateHabit}){
         <StyledCreateHabit isEnabled={showCreateHabit}>
             <input type="text" placeholder="nome do hábito" onChange={(e) => setHabitName(e.target.value)} required disabled={isLoading}/>
             <Weekdays>
-                <button id="7" onClick={saveDay} className={days.includes("7") ? "selected" : ""} disabled={isLoading} disabled={isLoading}>D</button>
+                <button id="7" onClick={saveDay} className={days.includes("7") ? "selected" : ""} disabled={isLoading}>D</button>
                 <button id="1" onClick={saveDay} className={days.includes("1") ? "selected" : ""} disabled={isLoading}>S</button>
                 <button id="2" onClick={saveDay} className={days.includes("2") ? "selected" : ""} disabled={isLoading}>T</button>
                 <button id="3" onClick={saveDay} className={days.includes("3") ? "selected" : ""} disabled={isLoading}>Q</button>
