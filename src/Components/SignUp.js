@@ -14,7 +14,7 @@ export default function SignUp(){
     let history = useHistory()
 
     const signUp = (e) => {
-        e.preventDEfault()
+        e.preventDefault()
         const body = {
             email, 
             name,
@@ -27,7 +27,8 @@ export default function SignUp(){
             history.push("/")
         })
         request.catch((err)=> {
-            alert("Ocorreu um erro ao entrar. Tente novamente")
+            alert("Ocorreu um erro ao se cadastrar. Tente novamente")
+            console.log(err.response.data)
             setIsLoading(false)
         })
     }
