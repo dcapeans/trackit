@@ -1,16 +1,17 @@
 import axios from "axios"
 import dayjs from "dayjs"
 import updateLocale from "dayjs/plugin/updateLocale"
-import { useCallback, useContext, useEffect, useState } from "react"
+import { useCallback, useContext, useEffect } from "react"
 import UserContext from "../Context/UserContext"
 import styled from "styled-components"
 import Footer from "./Footer"
 import Header from "./Header"
 import TodayHabit from "./TodayHabit"
+import TodayHabitsContext from "../Context/TodayHabitsContext"
 
 export default function Today(){
-    const [todayHabits, setTodayHabits] = useState([])
     const { user } = useContext(UserContext)
+    const { todayHabits, setTodayHabits} = useContext(TodayHabitsContext)
 
     dayjs().format()
     dayjs.extend(updateLocale)
@@ -29,7 +30,7 @@ export default function Today(){
         const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config)
         request.then((res) => setTodayHabits(res.data))
         request.catch((err) => console.log(err))
-    }, [user.token])
+    }, [user.token, setTodayHabits])
 
     useEffect(() => {
         fetchTodayHabits()

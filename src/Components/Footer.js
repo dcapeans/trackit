@@ -2,8 +2,11 @@ import { Link } from "react-router-dom"
 import styled from "styled-components"
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { useContext } from "react";
+import TodayHabitsContext from "../Context/TodayHabitsContext";
 
-export default function Footer({todayHabits}){
+export default function Footer(){
+    const { todayHabits } = useContext(TodayHabitsContext)
 
     return (
         <StyledFooter>
