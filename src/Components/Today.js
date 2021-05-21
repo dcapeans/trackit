@@ -13,7 +13,7 @@ export default function Today(){
     const { user } = useContext(UserContext)
     const { todayHabits, setTodayHabits} = useContext(TodayHabitsContext)
 
-    dayjs().format()
+    
     dayjs.extend(updateLocale)
     dayjs.updateLocale('en', {
         weekdays: [

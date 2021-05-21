@@ -14,19 +14,21 @@ export default function Footer(){
                 <button>Hábitos</button>
             </Link>
             <Link to="/hoje" className="progressbar">
-                <CircularProgressbar value={((todayHabits.filter((item)=> item.done).length / todayHabits.length)*100).toFixed()} text="Hoje" background backgroundPadding={6} styles={buildStyles({
-          backgroundColor: "#3e98c7",
-          textColor: "#fff",
-          pathColor: "#fff",
-          trailColor: "transparent"
-        })}/>
+                <CircularProgressbar 
+                    value={((todayHabits.filter((item)=> item.done).length / todayHabits.length)*100).toFixed()} 
+                    text="Hoje" 
+                    background 
+                    backgroundPadding={6} 
+                    styles={buildStyles({
+                    backgroundColor: "#3e98c7",
+                    textColor: "#fff",
+                    pathColor: "#fff",
+                    trailColor: "transparent"
+                })}/>
             </Link>
             <Link to="/historico">
                 <button>Histórico</button>
-            </Link>
-            
-            
-            
+            </Link>  
         </StyledFooter>
     )
 }
