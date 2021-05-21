@@ -41,12 +41,14 @@ export default function History ({setDayHabits}){
 
     const checkDayHabits = (value) => {
         const formatedDate = (dayjs(value).format('DD/MM/YYYY'))
-        const result = history.find(item => item.day === formatedDate)
-        console.log(result)
-        setDayHabits(result)
+        const resultDay = history.find(item => item.day === formatedDate)
+        if(!resultDay){
+            return ""
+        }
+        setDayHabits(resultDay)
         reactHistory.push("/dia")
     }
-
+    
     if(!history){
         return (
             <StyledLoader>

@@ -1,4 +1,3 @@
-import dayjs, { updateLocale } from "dayjs"
 import { useContext } from "react"
 import TodayHabitsContext from "../Context/TodayHabitsContext"
 import { IoCheckmark } from "react-icons/io5"
@@ -7,7 +6,7 @@ import Footer from "./Footer"
 import Header from "./Header"
 
 export default function ClickedDayHabits({dayHabits}){
-    const { todayHabits, setTodayHabits} = useContext(TodayHabitsContext)
+    const { todayHabits } = useContext(TodayHabitsContext)
     
     const setDay = () => {
         const weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"]
@@ -20,7 +19,7 @@ export default function ClickedDayHabits({dayHabits}){
         <Header />
         <Container>
             <Day>{setDay()} - {dayHabits.day}</Day>
-            <Progress>{dayHabits.habits.filter((item)=> item.done).length ? `${((dayHabits.habits.filter((item)=> item.done).length / dayHabits.habits.length)*100).toFixed()}% dos hábitos concluídos` : "Nenhum hábito concluído ainda"}
+            <Progress>{dayHabits.habits.filter((item)=> item.done).length ? `${((dayHabits.habits.filter((item)=> item.done).length / dayHabits.habits.length)*100).toFixed()}% dos hábitos concluídos` : "Nenhum hábito foi concluído"}
                 
             </Progress>
             {dayHabits.habits.map((habit) => (
