@@ -13,10 +13,12 @@ import UserContext from "./Context/UserContext";
 import History from "./Components/History";
 import TodayHabitsContext from "./Context/TodayHabitsContext";
 import GlobalStyle from "./styles/GlobalStyles";
+import ClickedDayHabits from "./Components/ClickedDayHabits";
 
 export default function App() {
     const [user, setUser] = useState(null)
     const [todayHabits, setTodayHabits] = useState([])
+    const [dayHabits, setDayHabits] = useState(null)
     
     return (
         <BrowserRouter>
@@ -37,7 +39,10 @@ export default function App() {
                             <Today />
                         </Route>
                         <Route path="/historico" exact>
-                            <History />
+                            <History setDayHabits={setDayHabits}/>
+                        </Route>
+                        <Route path="/dia" exact>
+                            <ClickedDayHabits dayHabits={dayHabits}/>
                         </Route>
                     </TodayHabitsContext.Provider>
                 </UserContext.Provider>

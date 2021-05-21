@@ -7,10 +7,13 @@ import Header from "./Header";
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import UserContext from '../Context/UserContext';
+import { useHistory } from 'react-router'
+import Loader from "react-loader-spinner"
 
-export default function History (){
+export default function History ({setDayHabits}){
     const [history, setHistory] = useState(null)
     const { user } = useContext(UserContext)
+    let reactHistory = useHistory()
 
     useEffect(() => {
         const config = {
@@ -26,7 +29,7 @@ export default function History (){
         // eslint-disable-next-line
     }, [user.token])
 
-    const checkDayHabits = ({date}) => {
+    const checkDayCompleted = ({date}) => {
         const formatedDate = dayjs(date).format('DD/MM/YYYY')
         const resultDay = history.find(item => item.day === formatedDate)
         if(!resultDay){
@@ -36,9 +39,19 @@ export default function History (){
         return isAllDone ? "green" : "red"
     }
 
+    const checkDayHabits = (value) => {
+        const formatedDate = (dayjs(value).format('DD/MM/YYYY'))
+        const result = history.find(item => item.day === formatedDate)
+        console.log(result)
+        setDayHabits(result)
+        reactHistory.push("/dia")
+    }
+
     if(!history){
         return (
-            <div>Loading</div>
+            <StyledLoader>
+                <Loader type="ThreeDots" color="#3e98c7" height={100} width={100}/>
+            </StyledLoader>
         )
     }
 
@@ -47,7 +60,7 @@ export default function History (){
         <Header />
         <Container>
             <Title>Histórico</Title>
-            <Calendar className="calendar" calendarType={'US'} tileClassName={checkDayHabits}/>
+            <Calendar className="calendar" calendarType={'US'} tileClassName={checkDayCompleted} onClickDay={checkDayHabits}/>
         </Container>
         <Footer />
         </>
@@ -82,4 +95,11 @@ const Title = styled.div`
     margin-bottom: 15px;
     color: #126BA5;
     font-size: 23px;
+`
+
+const StyledLoader = styled.div`
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
