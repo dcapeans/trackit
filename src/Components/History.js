@@ -21,7 +21,7 @@ export default function History ({setDayHabits}){
                 Authorization: `Bearer ${user.token}`
             }
         }
-        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/history/daily", config)
+        const request = axios.get(`${process.env.REACT_APP_API_BASE_URL}/habits/history/daily`, config)
         request.then((res) => {
             setHistory(res.data)
         })

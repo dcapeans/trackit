@@ -14,7 +14,7 @@ export default function TodayHabit({ todayHabit, fetchTodayHabits }){
             }
         }
         if(todayHabit.done){
-            const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${todayHabit.id}/uncheck`, [], config)
+            const request = axios.post(`${process.env.REACT_APP_API_BASE_URL}/habits/${todayHabit.id}/uncheck`, [], config)
             request.then((res) => {
                 fetchTodayHabits()
             })
@@ -22,7 +22,7 @@ export default function TodayHabit({ todayHabit, fetchTodayHabits }){
             
             return
         }
-        const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${todayHabit.id}/check`, [], config)
+        const request = axios.post(`${process.env.REACT_APP_API_BASE_URL}/habits/${todayHabit.id}/check`, [], config)
         request.then((res) => {
             fetchTodayHabits()
         })

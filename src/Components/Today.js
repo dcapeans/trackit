@@ -27,7 +27,7 @@ export default function Today(){
                 Authorization: `Bearer ${user.token}`
             }
         }
-        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config)
+        const request = axios.get(`${process.env.REACT_APP_API_BASE_URL}/habits/today`, config)
         request.then((res) => setTodayHabits(res.data))
         request.catch((err) => console.log(err))
     }, [user.token, setTodayHabits])

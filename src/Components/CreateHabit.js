@@ -26,7 +26,7 @@ export default function CreateHabit({showCreateHabit, setShowCreateHabit, fetchH
                 Authorization: `Bearer ${user.token}`
             }
         }
-        const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config)
+        const request = axios.post(`${process.env.REACT_APP_API_BASE_URL}/habits`, body, config)
         setIsLoading(true)
         request.then((res) => {
             setIsLoading(false)

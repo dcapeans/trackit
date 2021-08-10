@@ -16,7 +16,7 @@ export default function Habit({ habit, habits, setHabits, fetchHabits }){
                 Authorization: `Bearer ${user.token}`
             }
         }
-        const request = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habit.id}`, config )
+        const request = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/habits/${habit.id}`, config )
         request.then((res) => {
             fetchHabits()
         })

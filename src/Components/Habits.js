@@ -18,7 +18,7 @@ export default function Habits() {
                 Authorization: `Bearer ${user.token}`
             }
         }
-        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config)
+        const request = axios.get(`${process.env.REACT_APP_API_BASE_URL}/habits`, config)
         request.then((res)=> {
             setHabits(res.data)
         })
