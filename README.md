@@ -30,6 +30,7 @@ The following tools and frameworks were used in the construction of the project:
 </p>
 
 This app uses a external API for saving and retrieving data
+Add this URL to the .env file: https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit
 
 ## How to run
 
