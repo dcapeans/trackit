@@ -2,7 +2,7 @@
 
 An easy to use habit tracker. Keep all your habits within reach and organized, improving your lifestyle and motivation!
 
-Try it out now at https://trackit-opal.vercel.app/
+Try it out now at https://trackit-n6hft66gm-dcapeans.vercel.app/
 
 This is an web application with which lots of people can manage and track their habits and chores. Below are the implemented features:
 
